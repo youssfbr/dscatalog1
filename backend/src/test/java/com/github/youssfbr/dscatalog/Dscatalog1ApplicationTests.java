@@ -1,4 +1,4 @@
-package com.github.youssfbr.dscatalog1;
+package com.github.youssfbr.dscatalog;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
