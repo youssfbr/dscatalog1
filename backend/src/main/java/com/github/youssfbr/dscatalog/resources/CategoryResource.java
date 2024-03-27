@@ -1,6 +1,6 @@
 package com.github.youssfbr.dscatalog.resources;
 
-import com.github.youssfbr.dscatalog.entities.Category;
+import com.github.youssfbr.dscatalog.dto.CategoryDTO;
 import com.github.youssfbr.dscatalog.services.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ public class CategoryResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> findAll() {
+    public ResponseEntity<List<CategoryDTO>> findAll() {
         return ResponseEntity.ok(categoryService.findAll());
     }
 }
