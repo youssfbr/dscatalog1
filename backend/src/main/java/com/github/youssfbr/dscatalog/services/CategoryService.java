@@ -7,11 +7,13 @@ import com.github.youssfbr.dscatalog.services.exceptions.ResourceNotFoundExcepti
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
+    public static final String RESOURCE_NOT_FOUND = "Resource not found with id ";
     private final CategoryRepository categoryRepository;
 
     public CategoryService(CategoryRepository categoryRepository) {
@@ -30,7 +32,7 @@ public class CategoryService {
     public CategoryDTO findById(Long id) {
         return categoryRepository.findById(id)
                 .map(CategoryDTO::new)
-                .orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(RESOURCE_NOT_FOUND + id));
     }
 
     @Transactional
@@ -42,5 +44,20 @@ public class CategoryService {
         final Category categorysaved = categoryRepository.save(categoryToSave);
 
         return new CategoryDTO(categorysaved);
+    }
+
+    @Transactional
+    public CategoryDTO update(Long id , CategoryDTO dto) {
+        try {
+            final Category categoryToSave = categoryRepository.getOne(id);
+            categoryToSave.setName(dto.getName());
+
+            final Category categorySaved = categoryRepository.save(categoryToSave);
+
+            return new CategoryDTO(categorySaved);
+        }
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + id);
+        }
     }
 }
