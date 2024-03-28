@@ -2,6 +2,7 @@ package com.github.youssfbr.dscatalog.services;
 
 import com.github.youssfbr.dscatalog.dto.CategoryDTO;
 import com.github.youssfbr.dscatalog.repositories.CategoryRepository;
+import com.github.youssfbr.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,5 +23,12 @@ public class CategoryService {
                 .stream()
                 .map(CategoryDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public CategoryDTO findById(Long id) {
+        return categoryRepository.findById(id)
+                .map(CategoryDTO::new)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
     }
 }
