@@ -63,9 +63,9 @@ public class CategoryService {
             final Category categoryToSave = categoryRepository.getOne(id);
             categoryToSave.setName(dto.getName());
 
-            final Category categorySaved = categoryRepository.save(categoryToSave);
+            final Category categoryUpdated = categoryRepository.save(categoryToSave);
 
-            return new CategoryDTO(categorySaved);
+            return new CategoryDTO(categoryUpdated);
         }
         catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + id);
