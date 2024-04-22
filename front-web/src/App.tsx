@@ -1,3 +1,5 @@
+import './core/assets/styles/custom.scss';
+import './app.scss';
 function App() {
   return (
     <h1>App</h1>
